@@ -56,16 +56,14 @@ kotlin {
         browser {
             testTask {
                 useKarma {
-                    if(DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) useSafari()
-                    else useChromeHeadless()
+                    useChromeHeadless()
                 }
             }
         }
         nodejs {
             testTask {
                 useKarma {
-                    if(DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) useSafari()
-                    else useChromeHeadless()
+                    useChromeHeadless()
                 }
             }
         }
