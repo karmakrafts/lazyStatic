@@ -1,5 +1,11 @@
 # lazyStatic
 
+[![](https://git.karmakrafts.dev/kk/lazystatic/badges/master/pipeline.svg)](https://git.karmakrafts.dev/kk/lazystatic/-/pipelines)
+[![](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo.maven.apache.org%2Fmaven2%2Fdev%2Fkarmakrafts%2Flazystatic%2Flazystatic-core%2Fmaven-metadata.xml
+)](https://git.karmakrafts.dev/kk/lazystatic/-/packages)
+[![](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fdev%2Fkarmakrafts%2Flazystatic%2Flazystatic-core%2Fmaven-metadata.xml
+)](https://git.karmakrafts.dev/kk/lazystatic/-/packages)
+
 lazyStatic brings C++-like static locals to Kotlin Multiplatform.
 
 ### How to use it

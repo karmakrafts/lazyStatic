@@ -52,8 +52,20 @@ kotlin {
     watchosSimulatorArm64()
     jvm()
     js {
-        browser()
-        nodejs()
+        browser {
+            testTask {
+                useKarma {
+                    useFirefox()
+                }
+            }
+        }
+        nodejs {
+            testTask {
+                useKarma {
+                    useFirefox()
+                }
+            }
+        }
     }
     applyDefaultHierarchyTemplate()
     withSourcesJar(true)
