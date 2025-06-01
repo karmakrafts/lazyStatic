@@ -7,3 +7,4 @@ captures
 .externalNativeBuild
 local.properties
 xcuserdata
+kotlin-js-store/
