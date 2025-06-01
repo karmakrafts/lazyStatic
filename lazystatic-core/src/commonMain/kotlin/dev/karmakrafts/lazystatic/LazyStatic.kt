@@ -35,17 +35,50 @@ internal val tlLazyStaticValues: ThreadLocalRef<HashMap<SourceLocation, Any?>> =
 @PublishedApi
 internal val lazyStaticValues: ConcurrentMutableMap<SourceLocation, Any?> = ConcurrentMutableMap()
 
+/**
+ * Defines the storage strategy for lazy static values.
+ *
+ * @property getter Function to retrieve a value from storage by its location
+ * @property setter Function to store a value at a specific location
+ */
 enum class LazyStaticStorage(
     @PublishedApi internal val getter: (SourceLocation) -> Any?,
     @PublishedApi internal val setter: (SourceLocation, Any?) -> Unit,
 ) {
     // @formatter:off
+    /**
+     * Thread-local storage strategy.
+     * Values are stored in thread-local storage, meaning each thread has its own copy.
+     * This is useful when you need thread isolation for the lazy values.
+     */
     THREAD_LOCAL({ tlLazyStaticValues.getOrPut { HashMap() }[it] },
                  { location, value -> tlLazyStaticValues.getOrPut { HashMap() }[location] = value }),
+
+    /**
+     * Atomic storage strategy.
+     * Values are stored in a concurrent map shared across all threads.
+     * This is useful when you need the same value to be shared across different threads.
+     */
     ATOMIC      (lazyStaticValues::get, lazyStaticValues::set);
     // @formatter:on
 }
 
+/**
+ * Creates a lazily initialized static value that is computed only once and then reused across multiple calls.
+ *
+ * This function provides a way to create values that are:
+ * - Initialized lazily (only when first accessed)
+ * - Cached for subsequent calls
+ *
+ * @param T The type of value to be lazily initialized
+ * @param location The source location that uniquely identifies this lazy static value.
+ *                 Defaults to the current source location.
+ * @param storage The storage strategy to use for this value.
+ *                ATOMIC (default) shares the value across all threads.
+ *                THREAD_LOCAL provides a separate value for each thread.
+ * @param block The initialization function that computes the value on first access
+ * @return The lazily initialized value, either newly computed or retrieved from cache
+ */
 inline fun <reified T> lazyStatic( // @formatter:off
     location: SourceLocation = SourceLocation.here(),
     storage: LazyStaticStorage = LazyStaticStorage.ATOMIC,
