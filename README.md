@@ -1,7 +1,6 @@
 # lazyStatic
 
-lazyStatic brings C++-like static locals to Kotlin Multiplatform.  
-This is a useful tool when designing declarative APIs.
+lazyStatic brings C++-like static locals to Kotlin Multiplatform.
 
 ### How to use it
 
