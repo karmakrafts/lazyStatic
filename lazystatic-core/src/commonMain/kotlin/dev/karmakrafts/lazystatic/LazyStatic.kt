@@ -30,10 +30,10 @@ private fun <T> ThreadLocalRef<T>.getOrPut(initializer: () -> T): T {
 }
 
 @PublishedApi
-internal val tlLazyStaticValues: ThreadLocalRef<HashMap<SourceLocation, Any?>> = ThreadLocalRef()
+internal val tlLazyStaticValues: ThreadLocalRef<HashMap<Int, Any?>> = ThreadLocalRef()
 
 @PublishedApi
-internal val lazyStaticValues: ConcurrentMutableMap<SourceLocation, Any?> = ConcurrentMutableMap()
+internal val lazyStaticValues: ConcurrentMutableMap<Int, Any?> = ConcurrentMutableMap()
 
 /**
  * Defines the storage strategy for lazy static values.
@@ -42,8 +42,8 @@ internal val lazyStaticValues: ConcurrentMutableMap<SourceLocation, Any?> = Conc
  * @property setter Function to store a value at a specific location
  */
 enum class LazyStaticStorage(
-    @PublishedApi internal val getter: (SourceLocation) -> Any?,
-    @PublishedApi internal val setter: (SourceLocation, Any?) -> Unit,
+    @PublishedApi internal val getter: (Int) -> Any?,
+    @PublishedApi internal val setter: (Int, Any?) -> Unit,
 ) {
     // @formatter:off
     /**
@@ -71,8 +71,8 @@ enum class LazyStaticStorage(
  * - Cached for subsequent calls
  *
  * @param T The type of value to be lazily initialized
- * @param location The source location that uniquely identifies this lazy static value.
- *                 Defaults to the current source location.
+ * @param key The source location hash that uniquely identifies this lazy static value.
+ *                 Defaults to the current source location hash.
  * @param storage The storage strategy to use for this value.
  *                ATOMIC (default) shares the value across all threads.
  *                THREAD_LOCAL provides a separate value for each thread.
@@ -80,14 +80,14 @@ enum class LazyStaticStorage(
  * @return The lazily initialized value, either newly computed or retrieved from cache
  */
 inline fun <reified T> lazyStatic( // @formatter:off
-    location: SourceLocation = SourceLocation.here(),
+    key: Int = SourceLocation.hereHash(),
     storage: LazyStaticStorage = LazyStaticStorage.ATOMIC,
     block: () -> T
 ): T { // @formatter:on
-    var value = storage.getter(location)
+    var value = storage.getter(key)
     if (value == null) {
         value = block()
-        storage.setter(location, value)
+        storage.setter(key, value)
     }
     return value as T
 }
