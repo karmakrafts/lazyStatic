@@ -55,14 +55,14 @@ kotlin {
         browser {
             testTask {
                 useKarma {
-                    useFirefox()
+                    useChromeHeadless()
                 }
             }
         }
         nodejs {
             testTask {
                 useKarma {
-                    useFirefox()
+                    useChromeHeadless()
                 }
             }
         }
