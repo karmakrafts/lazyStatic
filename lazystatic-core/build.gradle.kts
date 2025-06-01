@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 import java.time.ZonedDateTime
 
 plugins {
@@ -55,14 +56,16 @@ kotlin {
         browser {
             testTask {
                 useKarma {
-                    useChromeHeadless()
+                    if(DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) useSafari()
+                    else useChromeHeadless()
                 }
             }
         }
         nodejs {
             testTask {
                 useKarma {
-                    useChromeHeadless()
+                    if(DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX) useSafari()
+                    else useChromeHeadless()
                 }
             }
         }
