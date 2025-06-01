@@ -1,0 +1,30 @@
+[versions]
+java = "17"
+
+androidGradle = "8.9.3" # https://developer.android.com/reference/tools/gradle-api
+androidCompileSDK = "35"
+androidMinimalSDK = "28"
+
+lazystatic = "1.0.0"
+kotlin = "2.1.21" # https://github.com/JetBrains/kotlin/releases
+dokka = "2.0.0" # https://github.com/Kotlin/dokka/releases
+karmaConventions = "1.3.20"
+gradleNexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
+stately = "2.1.0"
+kotest = "6.0.0.M4"
+introspekt = "1.2.0"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotest = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
+stately-concurrent-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
+introspekt-runtime = { module = "dev.karmakrafts.introspekt:introspekt-runtime", version.ref = "introspekt" }
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "androidGradle" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+karmaConventions = { id = "dev.karmakrafts.conventions.karma-conventions", version.ref = "karmaConventions" }
+gradleNexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "gradleNexus" }
+introspekt = { id = "dev.karmakrafts.introspekt.introspekt-gradle-plugin", version.ref = "introspekt" }
