@@ -120,3 +120,9 @@ tasks {
         }
     }
 }
+
+publishing {
+    publications.withType<MavenPublication> {
+        artifact(dokkaJar)
+    }
+}
