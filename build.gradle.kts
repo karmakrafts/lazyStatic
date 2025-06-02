@@ -51,7 +51,7 @@ allprojects {
     if (GitLabCI.isCI) defaultDependencyLocking()
 
     publishing {
-        setProjectInfo(rootProject.name, "Positional code and compile time introspection API for Kotlin/Multiplatform")
+        setProjectInfo(rootProject.name, "C++-like static locals for Kotlin Multiplatform.")
         apache2License()
         setRepository("github.com/karmakrafts/lazyStatic")
         with(GitLabCI) { karmaKraftsDefaults() }
