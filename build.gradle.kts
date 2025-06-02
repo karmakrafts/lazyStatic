@@ -17,7 +17,6 @@
 import dev.karmakrafts.conventions.GitLabCI
 import dev.karmakrafts.conventions.apache2License
 import dev.karmakrafts.conventions.authenticatedSonatype
-import dev.karmakrafts.conventions.configureJava
 import dev.karmakrafts.conventions.defaultDependencyLocking
 import dev.karmakrafts.conventions.setProjectInfo
 import dev.karmakrafts.conventions.setRepository
@@ -38,11 +37,8 @@ plugins {
 group = "dev.karmakrafts.lazystatic"
 version = GitLabCI.getDefaultVersion(libs.versions.lazystatic)
 
-allprojects {
-    configureJava(rootProject.libs.versions.java)
-}
-
-@OptIn(ExperimentalEncodingApi::class) subprojects {
+@OptIn(ExperimentalEncodingApi::class)
+subprojects {
     apply<MavenPublishPlugin>()
     apply<SigningPlugin>()
 

@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import dev.karmakrafts.conventions.configureJava
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.time.ZonedDateTime
 
 plugins {
@@ -25,6 +26,8 @@ plugins {
     signing
     `maven-publish`
 }
+
+configureJava(libs.versions.java)
 
 kotlin {
     compilerOptions {
@@ -53,6 +56,23 @@ kotlin {
     watchosSimulatorArm64()
     jvm()
     js {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
+        }
+        nodejs {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
+        }
+    }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
         browser {
             testTask {
                 useKarma {
