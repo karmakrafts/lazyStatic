@@ -49,7 +49,7 @@ subprojects {
     publishing {
         setProjectInfo(rootProject.name, "C++-like static locals for Kotlin Multiplatform.")
         apache2License()
-        setRepository("github.com/karmakrafts/lazyStatic")
+        setRepository("github.com", "karmakrafts/lazyStatic")
         with(GitLabCI) { karmaKraftsDefaults() }
     }
 
