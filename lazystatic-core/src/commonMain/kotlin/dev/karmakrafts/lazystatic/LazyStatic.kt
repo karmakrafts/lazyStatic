@@ -20,6 +20,9 @@ import co.touchlab.stately.collections.ConcurrentMutableMap
 import co.touchlab.stately.concurrency.ThreadLocalRef
 import co.touchlab.stately.concurrency.value
 import dev.karmakrafts.introspekt.util.SourceLocation
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @Suppress("UNCHECKED_CAST")
 private fun <T> ThreadLocalRef<T>.getOrPut(initializer: () -> T): T {
@@ -79,11 +82,15 @@ enum class LazyStaticStorage(
  * @param block The initialization function that computes the value on first access
  * @return The lazily initialized value, either newly computed or retrieved from cache
  */
+@OptIn(ExperimentalContracts::class)
 inline fun <reified T> lazyStatic( // @formatter:off
     key: Int = SourceLocation.hereHash(),
     storage: LazyStaticStorage = LazyStaticStorage.ATOMIC,
     block: () -> T
 ): T { // @formatter:on
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
     var value = storage.getter(key)
     if (value == null) {
         value = block()
