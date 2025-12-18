@@ -145,6 +145,6 @@ publish-documentation:
   rules:
     - *if-release
   script:
-    - ./gradlew -DpublishDocs.root=/var/www/docs/lazystatic publishDocs
+    - ./gradlew -DpublishDocs.root=/var/www/docs publishDocs
   tags:
     - docs
