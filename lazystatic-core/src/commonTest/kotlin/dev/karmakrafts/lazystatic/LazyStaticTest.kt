@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.lazystatic
 
-import io.kotest.matchers.shouldBe
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.uuid.Uuid
 
 class LazyStaticTest {
@@ -29,7 +29,7 @@ class LazyStaticTest {
     fun `lazyStatic retains object value between calls`() {
         val id = testFunction()
         for (i in 0..<10) {
-            testFunction() shouldBe id
+            assertEquals(id, testFunction())
         }
     }
 
@@ -42,8 +42,8 @@ class LazyStaticTest {
     @Test
     fun `lazyStatic with Unit should only be invoked once`() {
         testFunction2()
-        testValue shouldBe 1
+        assertEquals(1, testValue)
         testFunction2()
-        testValue shouldBe 1
+        assertEquals(1, testValue)
     }
 }
